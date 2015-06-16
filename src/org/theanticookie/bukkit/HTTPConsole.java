@@ -29,9 +29,11 @@ public class HTTPConsole extends JavaPlugin
 {
 	public static boolean debugging = false;
 
-	//private static final HashMap<Player, Boolean> debugees = new HashMap<Player, Boolean>();
+	// TODO : Reorganize this, this is a potential leak!
 	private static final Logger logger = Logger.getLogger( "org.bukkit.BlueJeansAndRain.HTTPConsole" );
 
+	public static HTTPConsole self; // Ugly hack
+	
 	private static PluginDescriptionFile package_description = null;
 	private static ResourceManager resource_manager = null;
 	private LogFilterConsoleCommandSender console_filter = null;
@@ -138,8 +140,9 @@ public class HTTPConsole extends JavaPlugin
 		return config;
 	}
 
-    public void onEnable()
-	{
+    public void onEnable() {
+            this.self = this;
+
 		if ( package_description == null )
 			package_description = getDescription();
 		if ( resource_manager == null )
@@ -218,6 +221,7 @@ public class HTTPConsole extends JavaPlugin
 			minecraft_logger.setFilter( null );
 
         rawLog( "%s %s is disabled", getPackageName(), getVersion() );
+        this.self = null; // Fuck memory leaks
     }
 	
     /*public boolean isDebugging( final Player player )
