@@ -1,16 +1,8 @@
 package org.theanticookie.bukkit.httpconsole;
 
 import org.bukkit.Bukkit;
-import org.bukkit.scheduler.BukkitTask;
 
-import java.io.Writer;
 import java.io.StringWriter;
-import java.io.IOException;
-import java.util.logging.Logger;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import org.json.simple.JSONObject;
 import org.theanticookie.bukkit.HTTPConsole;
@@ -35,7 +27,6 @@ public class RequestHandler extends HTTPRequestHandler
         // Prevent concurrent exceptions, make sure that command is executed on MAIN
         // thread and not somewhere else. Otherwise we end up with. Shit.
         Bukkit.getServer().getScheduler().runTask(HTTPConsole.self, new Runnable() {
-        	@Override
         	public void run() { 
         		try
         		{
