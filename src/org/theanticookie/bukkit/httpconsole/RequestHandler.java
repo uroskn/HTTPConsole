@@ -82,11 +82,6 @@ public class RequestHandler extends HTTPRequestHandler
             output = executeConsoleCommand( command );
         }
 
-        if (output.equals("")) {
-            response_code = 404;
-            output = "Error: Invalid parameters";
-        }
-
 
         HTTPResponseHeaderHelper.outputHeaders( response_code, out );
         out.write(output);
